@@ -7,8 +7,12 @@ def step_function(x):
   return output_value.astype(np.int)
 
 def sigmoid(x):
-  input_value = np.array(x)
-  output_value = 1/(1 + np.exp(-input_value))
+  output_value = np.zeros(len(x))
+  for it in range(len(x)):
+    if x[it] >= 0:
+      output_value[it] = 1/(1 + np.exp(-x[it]))
+    else:
+      output_value[it] = np.exp(x[it])/(1+np.exp(x[it]))
   return output_value
 
 def plot_array(x,fig_axis=None):
