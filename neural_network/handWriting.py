@@ -40,9 +40,15 @@ if __name__ == "__main__":
   network = init_network()
 
   accuracy_cut = 0
-  for i in range(len(x)):
-    y = predict(network,x[i])
-    p = np.argmax(y)
-    if p == t[i]:
-      accuracy_cut += 1
+  # for i in range(len(x)):
+  #   y = predict(network,x[i])
+  #   p = np.argmax(y)
+  #   if p == t[i]:
+  #     accuracy_cut += 1
+  batch_size = 100
+  for i in range(0 ,len(x), batch_size):
+    x_batch = x[i:i+batch_size]
+    y_batch = predict(network, x_batch)
+    p = np.argmax(y_batch , axis=1)
+    accuracy_cut += np.sum(p == t[i:i+batch_size])
   print("Accuracy:"+str(float(accuracy_cut)/len(x)))

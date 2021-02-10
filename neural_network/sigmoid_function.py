@@ -7,12 +7,20 @@ def step_function(x):
   return output_value.astype(np.int)
 
 def sigmoid(x):
-  output_value = np.zeros(len(x))
-  for it in range(len(x)):
-    if x[it] >= 0:
-      output_value[it] = 1/(1 + np.exp(-x[it]))
-    else:
-      output_value[it] = np.exp(x[it])/(1+np.exp(x[it]))
+  output_value = np.zeros(x.shape)
+  if output_value.ndim == 2:
+    for x_dim in range(len(x)):
+      for y_dim in range(len(x[x_dim])):
+        if x[x_dim][y_dim] >= 0 :
+          output_value[x_dim][y_dim] = 1/(1 + np.exp(- x[x_dim][y_dim]))
+        else:
+          output_value[x_dim][y_dim] = np.exp(x[x_dim][y_dim])/(1 + np.exp(x[x_dim][y_dim]))
+  else:
+    for it in range(len(x)):
+      if x[it] >= 0:
+        output_value[it] = 1/(1 + np.exp(-x[it]))
+      else:
+        output_value[it] = np.exp(x[it])/(1+np.exp(x[it]))
   return output_value
 
 def plot_array(x,fig_axis=None):
